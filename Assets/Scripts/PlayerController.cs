@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
 {
     public int PlayerName;
     public float Speed;
-    public Connection Connection;
     private Rigidbody rb;
+
+    public PlayerController otherController;
 
     public GameManager gameManager;
 
@@ -25,10 +26,12 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector3(x, y, 0).normalized * Speed;
 
-            if(Input.GetKeyUp(KeyCode.Space))
-            {
-                Connection.IsConnected = false;
-            }
+            Vector3 vectorToOther = otherController.transform.position - transform.position;
+            transform.up = vectorToOther.normalized;
+if(Input.GetKeyUp(KeyCode.Space))
+{
+Connection.IsConnected = false;
+}
         }
 	}
 
