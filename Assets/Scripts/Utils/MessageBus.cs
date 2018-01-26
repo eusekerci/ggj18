@@ -17,4 +17,10 @@ public static class MessageBus
     {
         return UniRx.MessageBroker.Default.Receive<T>();
     }
+
+    public static void UnSubscribe<T>() where T : GGJEvent
+    {
+        Type type = typeof(T);
+        UniRx.MessageBroker.Default.Remove(type);
+    }
 }
