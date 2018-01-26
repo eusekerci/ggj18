@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public int PlayerName;
     public float Speed;
+    public Connection Connection;
     private Rigidbody rb;
 
     public GameManager gameManager;
@@ -23,6 +24,11 @@ public class PlayerController : MonoBehaviour
             float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
 
             rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+
+            if(Input.GetKeyUp(KeyCode.Space))
+            {
+                Connection.IsConnected = false;
+            }
         }
 	}
 
