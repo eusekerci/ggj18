@@ -26,7 +26,7 @@ public class RPGGunner : Enemy
 
     public override void OnHitPlayer()
     {
-
+        spawner.OnKillPlayer();
     }
 
     public override void HandleMovement()

@@ -16,12 +16,17 @@ public class AyiOgluAyi : Enemy
 
     public override void OnHitConnection()
     {
-
+        spawner.OnKillPlayer();
     }
 
     public override void OnHitPlayer()
     {
+        spawner.OnKillPlayer();
+    }
 
+    public override void Enrage()
+    {
+        Kill();
     }
 
     public override float GetDifficulty()

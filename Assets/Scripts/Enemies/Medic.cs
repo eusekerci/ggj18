@@ -22,7 +22,7 @@ public class Medic : Enemy
 
     public override void OnHitPlayer()
     {
-
+        spawner.OnKillPlayer();
     }
 
     public override float GetDifficulty()

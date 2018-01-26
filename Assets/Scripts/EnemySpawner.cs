@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
 
     List<Enemy> allEnemies = new List<Enemy>();
 
+    public GameManager gameManager;
     public GameObject[] enemyPrefabs;
 
 	void Start ()
@@ -25,32 +26,67 @@ public class EnemySpawner : MonoBehaviour
 	
 	void Update ()
     {
-        accumulatedTime = accumulatedTime + Time.deltaTime;
-        targetDifficulty = Mathf.Max(Mathf.Sqrt(accumulatedTime), 2);
-        if(currentDifficulty < targetDifficulty - 1)
+        if(gameManager.state == GameManager.State.Game)
         {
-            Debug.Log("Current diff: " + currentDifficulty + " target: " + targetDifficulty);
-            Enemy newEnemy = GetRandomEnemy();
-            newEnemy.spawner = this;
+            accumulatedTime = accumulatedTime + Time.deltaTime;
+            targetDifficulty = Mathf.Max(Mathf.Sqrt(accumulatedTime), 2);
+            if (currentDifficulty < targetDifficulty - 1)
+            {
+                Enemy newEnemy = GetRandomEnemy();
+                newEnemy.spawner = this;
 
-            Vector2 randomVector = Random.insideUnitCircle.normalized;
-            newEnemy.moveDirection = randomVector;
-            newEnemy.transform.position = -randomVector * 5.0f;
+                Vector2 randomVector = Random.insideUnitCircle.normalized;
+                newEnemy.moveDirection = randomVector;
+                newEnemy.transform.position = GetInitialPosition(randomVector);
 
-            currentDifficulty = currentDifficulty + newEnemy.GetDifficulty();
+                currentDifficulty = currentDifficulty + newEnemy.GetDifficulty();
 
-            allEnemies.Add(newEnemy);
+                allEnemies.Add(newEnemy);
+            }
         }
 	}
 
+    public void OnKillPlayer()
+    {
+        gameManager.OnGameOver();
+    }
+
+    public void ClearAll()
+    {
+        for(int i = 0; i < allEnemies.Count; i++)
+        {
+            GameObject.Destroy(allEnemies[i].gameObject);
+        }
+        allEnemies.Clear();
+        accumulatedTime = 0;
+    }
+
+    Vector3 GetInitialPosition(Vector2 moveDirection)
+    {
+        float cameraSize = Camera.main.orthographicSize;
+        float xIterationRequirement = Mathf.Abs(cameraSize / moveDirection.x);
+        float yIterationRequirement = Mathf.Abs(cameraSize / moveDirection.y);
+
+        float minIteration = Mathf.Min(xIterationRequirement, yIterationRequirement);
+        return -moveDirection * minIteration;
+    }
+
     public void OnEnemyEnraged(Enemy enemy)
     {
-        Vector2 randomVector = Random.insideUnitCircle.normalized;
-        enemy.moveDirection = randomVector;
-        enemy.transform.position = -randomVector * 5.0f;
+        //         Vector2 randomVector = Random.insideUnitCircle.normalized;
+        //         enemy.moveDirection = randomVector;
+        //         enemy.transform.position = -randomVector * 5.0f;
+        //         enemy.isEnraged = true;
+
+        //if(!enemy.isEnraged)
+        {
+            currentDifficulty = currentDifficulty - enemy.GetDifficulty();
+        }
+
+        enemy.moveDirection = -enemy.moveDirection;
+        enemy.GetComponent<Renderer>().material.color = Color.red;
         enemy.isEnraged = true;
 
-        currentDifficulty = currentDifficulty - enemy.GetDifficulty();
     }
 
     public void OnEnemyKilled(Enemy enemy)
@@ -61,6 +97,7 @@ public class EnemySpawner : MonoBehaviour
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
         GameObject.Destroy(enemy.gameObject);
+        
     }
 
     Enemy GetRandomEnemy()

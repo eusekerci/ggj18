@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float Speed;
     private Rigidbody rb;
 
+    public GameManager gameManager;
+
 	void Start ()
     {
         rb = GetComponent<Rigidbody>();
@@ -15,9 +17,24 @@ public class PlayerController : MonoBehaviour
 	
 	void Update ()
     {
-        float x = PlayerName == 1 ? Input.GetAxis("Horizontal2") : Input.GetAxis("Horizontal");
-        float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
+        if(gameManager.state == GameManager.State.Game)
+        {
+            float x = PlayerName == 1 ? Input.GetAxis("Horizontal2") : Input.GetAxis("Horizontal");
+            float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
 
-        rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+            rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+        }
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (gameManager.state == GameManager.State.Game)
+        {
+            Enemy collidedEnemy = other.gameObject.GetComponent<Enemy>();
+            if (collidedEnemy != null)
+            {
+                collidedEnemy.OnHitPlayer();
+            }
+        }
+    }
 }

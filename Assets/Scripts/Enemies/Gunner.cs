@@ -26,7 +26,7 @@ public class Gunner : Enemy
 
     public override void OnHitPlayer()
     {
-
+        spawner.OnKillPlayer();
     }
 
     public override void HandleMovement()

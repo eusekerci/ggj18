@@ -30,7 +30,9 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Update ()
     {
         HandleMovement();
-	}
+        CheckBounds();
+
+    }
 
     public abstract float GetDifficulty();
     public abstract EnemyType GetEnemyType();
@@ -47,10 +49,18 @@ public abstract class Enemy : MonoBehaviour
         spawner.OnEnemyKilled(this);
     }
     
+    public void CheckBounds()
+    {
+        float cameraSize = Camera.main.orthographicSize;
+        if(transform.position.x > cameraSize || transform.position.x < -cameraSize || transform.position.y > cameraSize || transform.position.y < -cameraSize)
+        {
+            Enrage();
+        }
+    }
 
     public virtual void HandleMovement()
     {
-        transform.position = transform.position + moveDirection * speed * Time.deltaTime;
+        transform.position = transform.position + moveDirection * speed * Time.deltaTime * (isEnraged ? 2 : 1);
     }
 
     public static Enemy CreateWithType(EnemyType enemyType)

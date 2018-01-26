@@ -21,7 +21,7 @@ public class Ayi : Enemy
 
     public override void OnHitPlayer()
     {
-
+        spawner.OnKillPlayer();
     }
 
     public override float GetDifficulty()
