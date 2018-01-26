@@ -14,6 +14,10 @@ public class Connection : MonoBehaviour
     public Vector3 OneToTwoDirection;
     public LayerMask EnemyLayer;
 
+    public GameObject Lazer;
+    public float LazerMaksWidth;
+    public float LazerMinWidth;
+
     void Start ()
     {
 
@@ -22,9 +26,15 @@ public class Connection : MonoBehaviour
 	void Update ()
     {
         OneToTwoDirection = (PlayerTwo.position - PlayerOne.position).normalized;
-        CurrentDistance = (PlayerOne.position - PlayerTwo.position).sqrMagnitude;
+        CurrentDistance = (PlayerOne.position - PlayerTwo.position).magnitude;
         if(IsConnected)
         {
+            Lazer.SetActive(true);
+            Lazer.transform.position = (PlayerOne.position + PlayerTwo.position) / 2.0f;
+            Lazer.transform.localScale = new Vector3(1, LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth), CurrentDistance);
+            Lazer.transform.LookAt(PlayerTwo);
+
+
             if(CurrentDistance > MaxDistance)
             {
                 IsConnected = false;
@@ -40,7 +50,8 @@ public class Connection : MonoBehaviour
         }
         else
         {
-            if(CurrentDistance < MinRangeToReconnect)
+            Lazer.SetActive(false);
+            if (CurrentDistance < MinRangeToReconnect)
             {
                 IsConnected = true;
             }
