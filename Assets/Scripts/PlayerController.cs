@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int playerName;
-    public float speed;
+    public int PlayerName;
+    public float Speed;
     private Rigidbody rb;
 
 	void Start ()
@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
 	
 	void Update ()
     {
-        float x = playerName == 1 ? Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal2");
-        float y = playerName == 1 ? Input.GetAxis("Vertical") : Input.GetAxis("Vertical2");
+        float x = PlayerName == 1 ? Input.GetAxis("Horizontal2") : Input.GetAxis("Horizontal");
+        float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
 
-        rb.velocity = new Vector3(x, y, 0).normalized * speed;
+        rb.velocity = new Vector3(x, y, 0).normalized * Speed;
 	}
 }
