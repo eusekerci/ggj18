@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+
 
 public enum EnemyType
 {
@@ -18,10 +20,12 @@ public abstract class Enemy : MonoBehaviour
     public Vector3 moveDirection;
     public float speed = 1.0f;
     public bool isEnraged = false;
+    public EnemySpawner spawner;
+
 	public virtual void Start ()
     {
 
-	}
+    }
 
     public virtual void Update ()
     {
@@ -30,6 +34,19 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract float GetDifficulty();
     public abstract EnemyType GetEnemyType();
+    public abstract void OnHitConnection();
+    public abstract void OnHitPlayer();
+
+    public virtual void Enrage()
+    {
+        spawner.OnEnemyEnraged(this);
+    }
+
+    public virtual void Kill()
+    {
+        spawner.OnEnemyKilled(this);
+    }
+    
 
     public virtual void HandleMovement()
     {

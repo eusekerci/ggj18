@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-public class ConnectionHitTest : MonoBehaviour {
+public class ConnectionHitTest : MonoBehaviour
+{
 
 	void Start ()
     {
-        MessageBus.OnEvent<OnConnectionHit>().Subscribe(evnt =>
-        {
-            Destroy(this.gameObject);
-        });
+
+
 	}
 	
 	void Update ()

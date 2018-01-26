@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65800901654587770}
   - component: {fileID: 23092268622003176}
   - component: {fileID: 114479039094695252}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65382069490202932}
   - component: {fileID: 23669587913639958}
   - component: {fileID: 114170054747343404}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ayi
   m_TagString: Untagged
   m_Icon: {fileID: 0}

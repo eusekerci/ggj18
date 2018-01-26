@@ -14,6 +14,16 @@ public class AyiOgluAyi : Enemy
         base.Update();
     }
 
+    public override void OnHitConnection()
+    {
+
+    }
+
+    public override void OnHitPlayer()
+    {
+
+    }
+
     public override float GetDifficulty()
     {
         return 2.0f;

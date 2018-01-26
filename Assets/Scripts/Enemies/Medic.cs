@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,16 @@ public class Medic : Enemy
     public override void Update()
     {
         base.Update();
+    }
+
+    public override void OnHitConnection()
+    {
+        Kill();
+    }
+
+    public override void OnHitPlayer()
+    {
+
     }
 
     public override float GetDifficulty()

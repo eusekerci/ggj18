@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65314586211800694}
   - component: {fileID: 23777885138441756}
   - component: {fileID: 114993234694990586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RPGGunner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -19,6 +19,16 @@ public class Gunner : Enemy
         return 2.5f;
     }
 
+    public override void OnHitConnection()
+    {
+        Kill();
+    }
+
+    public override void OnHitPlayer()
+    {
+
+    }
+
     public override void HandleMovement()
     {
 

@@ -19,6 +19,16 @@ public class RPGGunner : Enemy
         return 3.0f;
     }
 
+    public override void OnHitConnection()
+    {
+        Kill();
+    }
+
+    public override void OnHitPlayer()
+    {
+
+    }
+
     public override void HandleMovement()
     {
 

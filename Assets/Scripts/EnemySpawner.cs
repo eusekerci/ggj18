@@ -31,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Debug.Log("Current diff: " + currentDifficulty + " target: " + targetDifficulty);
             Enemy newEnemy = GetRandomEnemy();
+            newEnemy.spawner = this;
 
             Vector2 randomVector = Random.insideUnitCircle.normalized;
             newEnemy.moveDirection = randomVector;
@@ -59,6 +60,7 @@ public class EnemySpawner : MonoBehaviour
         {
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
+        GameObject.Destroy(enemy.gameObject);
     }
 
     Enemy GetRandomEnemy()
