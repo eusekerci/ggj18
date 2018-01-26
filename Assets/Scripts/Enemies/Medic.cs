@@ -17,12 +17,12 @@ public class Medic : Enemy
 
     public override void OnHitConnection()
     {
-        Kill();
+        spawner.OnKillPlayer();
     }
 
     public override void OnHitPlayer()
     {
-        spawner.OnKillPlayer();
+        Kill();
     }
 
     public override float GetDifficulty()

@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float Speed;
     private Rigidbody rb;
 
+    public PlayerController otherController;
+
     public GameManager gameManager;
 
 	void Start ()
@@ -23,6 +25,9 @@ public class PlayerController : MonoBehaviour
             float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
 
             rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+
+            Vector3 vectorToOther = otherController.transform.position - transform.position;
+            transform.up = vectorToOther.normalized;
         }
 	}
 

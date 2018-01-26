@@ -35,9 +35,33 @@ public class EnemySpawner : MonoBehaviour
                 Enemy newEnemy = GetRandomEnemy();
                 newEnemy.spawner = this;
 
-                Vector2 randomVector = Random.insideUnitCircle.normalized;
-                newEnemy.moveDirection = randomVector;
-                newEnemy.transform.position = GetInitialPosition(randomVector);
+                float randomValue = Random.Range(0.0f, 1.0f);
+                float cameraSize = Camera.main.orthographicSize;
+                Vector2 entryPoint;
+                Vector2 exitPoint;
+                if(randomValue < 0.25f)
+                {
+                    entryPoint = new Vector2(-cameraSize, Random.Range(-cameraSize, cameraSize));
+                    exitPoint = new Vector2(cameraSize, Random.Range(-cameraSize, cameraSize));
+                }
+                else if (randomValue < 0.5f)
+                {
+                    entryPoint = new Vector2(cameraSize, Random.Range(-cameraSize, cameraSize));
+                    exitPoint = new Vector2(-cameraSize, Random.Range(-cameraSize, cameraSize));
+                }
+                else if (randomValue < 0.5f)
+                {
+                    entryPoint = new Vector2(Random.Range(-cameraSize, cameraSize), cameraSize);
+                    exitPoint = new Vector2(Random.Range(-cameraSize, cameraSize), -cameraSize);
+                }
+                else
+                {
+                    entryPoint = new Vector2(Random.Range(-cameraSize, cameraSize), cameraSize);
+                    exitPoint = new Vector2(Random.Range(-cameraSize, cameraSize), -cameraSize);
+                }
+
+                newEnemy.transform.position = entryPoint;
+                newEnemy.moveDirection = (exitPoint - entryPoint).normalized;
 
                 currentDifficulty = currentDifficulty + newEnemy.GetDifficulty();
 
@@ -59,16 +83,6 @@ public class EnemySpawner : MonoBehaviour
         }
         allEnemies.Clear();
         accumulatedTime = 0;
-    }
-
-    Vector3 GetInitialPosition(Vector2 moveDirection)
-    {
-        float cameraSize = Camera.main.orthographicSize;
-        float xIterationRequirement = Mathf.Abs(cameraSize / moveDirection.x);
-        float yIterationRequirement = Mathf.Abs(cameraSize / moveDirection.y);
-
-        float minIteration = Mathf.Min(xIterationRequirement, yIterationRequirement);
-        return -moveDirection * minIteration;
     }
 
     public void OnEnemyEnraged(Enemy enemy)
