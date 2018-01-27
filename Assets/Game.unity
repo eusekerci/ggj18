@@ -417,7 +417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerOne: {fileID: 1729506933}
   PlayerTwo: {fileID: 1458840206}
-  MinRangeToReconnect: 1
+  MinRangeToReconnect: 1.1
   MaxDistance: 5
   IsConnected: 0
   CurrentDistance: 0
