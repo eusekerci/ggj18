@@ -20,8 +20,6 @@ public class Connection : MonoBehaviour
     public float LazerMinWidth;
 
     public LineRenderer LightningRenderer;
-    public Color MinColor;
-    public Color MaxColor;
 
     void Start ()
     {
