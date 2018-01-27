@@ -27,8 +27,11 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject killByLaserParticlePrefab;
 
+    public float totalScoreCollected;
+
     void Start ()
     {
+        totalScoreCollected = 0;
         currentDifficulty = 0;
         enemyTypeToDifficultyMap.Add(EnemyType.Ayi, 1.0f);
         enemyTypeToDifficultyMap.Add(EnemyType.Ayiogluayi, 2.0f);
@@ -141,6 +144,7 @@ public class EnemySpawner : MonoBehaviour
         {
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
+        totalScoreCollected = totalScoreCollected + enemy.GetDifficulty();
         GameObject.Destroy(enemy.gameObject);
     }
 
