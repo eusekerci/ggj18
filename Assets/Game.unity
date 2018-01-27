@@ -1170,7 +1170,7 @@ MonoBehaviour:
   otherController: {fileID: 1729506930}
   gameManager: {fileID: 17731483}
   PlayerDeathParticlePrefab: {fileID: 1725804266}
-  Renderer: {fileID: 1723254332}
+  Renderer: {fileID: 1875957102}
 --- !u!54 &1458840202
 Rigidbody:
   m_ObjectHideFlags: 0
