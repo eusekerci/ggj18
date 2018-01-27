@@ -103,6 +103,7 @@ public class EnemySpawner : MonoBehaviour
         }
         allEnemies.Clear();
         accumulatedTime = 0;
+        currentDifficulty = 0;
     }
 
     IEnumerator KillByLaserCoroutine(Vector3 position)
