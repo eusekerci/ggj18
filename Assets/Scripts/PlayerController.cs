@@ -27,8 +27,19 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = new Vector3(x, y, 0).normalized * Speed;
 
-            Vector3 vectorToOther = otherController.transform.position - transform.position;
-            transform.up = vectorToOther.normalized;
+            if (Connection.IsConnected)
+            {
+                Vector3 vectorToOther = otherController.transform.position - transform.position;
+                transform.up = vectorToOther.normalized;
+            }
+            else
+            {
+                Vector3 velocityVec = new Vector3(x, y, 0).normalized;
+                if (rb.velocity.magnitude > 0)
+                {
+                    transform.up = velocityVec.normalized;
+                }
+            }
             if(Input.GetKeyUp(KeyCode.Space))
             {
                 Connection.IsConnected = false;

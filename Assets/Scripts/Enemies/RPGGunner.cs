@@ -17,6 +17,7 @@ public class RPGGunner : Enemy
     public override void Update()
     {
         base.Update();
+        transform.up = Player.transform.position - transform.position;
     }
 
     public override float GetDifficulty()

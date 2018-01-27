@@ -87,6 +87,11 @@ MonoBehaviour:
   isEnraged: 0
   spawner: {fileID: 0}
   renderer: {fileID: 212168162465014172}
+  State: 0
+  GunPrefab: {fileID: 1445571882358508, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+  Player: {fileID: 0}
+  FirePerSec: 3
+  StateChangePerSec: 3
 --- !u!135 &135422964594011402
 SphereCollider:
   m_ObjectHideFlags: 1

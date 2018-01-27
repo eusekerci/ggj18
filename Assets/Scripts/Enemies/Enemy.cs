@@ -32,7 +32,6 @@ public abstract class Enemy : MonoBehaviour
     {
         HandleMovement();
         CheckBounds();
-
     }
 
     public abstract float GetDifficulty();
