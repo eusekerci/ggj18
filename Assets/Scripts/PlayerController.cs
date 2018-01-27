@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
             Vector3 vectorToOther = otherController.transform.position - transform.position;
             transform.up = vectorToOther.normalized;
+if(Input.GetKeyUp(KeyCode.Space))
+{
+Connection.IsConnected = false;
+}
         }
 	}
 
