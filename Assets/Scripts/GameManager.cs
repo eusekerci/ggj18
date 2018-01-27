@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject menuUI;
     public GameObject gameOverUI;
     public GameObject gameUI;
+    public Text scoreText;
+    public Text gameOverText;
+
+    public int highScore;
+    
 
     public enum State
     {
@@ -22,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        highScore = PlayerPrefs.GetInt("highScore", 0);
         state = State.Game;
 
         float xMid = (Utils.xMin + Utils.xMax) * 0.5f;
@@ -55,12 +63,30 @@ public class GameManager : MonoBehaviour
     {
         if(state == State.GameOver && Input.GetKeyDown(KeyCode.Space))
         {
+            SceneManager.LoadScene("Game");
             SwitchState(State.Game);
         }
+        scoreText.text = "" + Mathf.RoundToInt(enemySpawner.totalScoreCollected * 10);
     }
 
     public void OnGameOver()
     {
+        int playerScore = Mathf.RoundToInt(enemySpawner.totalScoreCollected * 10);
+        int prevHighScore = highScore;
+        if(playerScore > highScore)
+        {
+            gameOverText.text = "New High Score!\n";
+            gameOverText.text += "You still suck, though.\n";
+            highScore = playerScore;
+            PlayerPrefs.SetInt("highScore", highScore);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            gameOverText.text = "Noobs. You suck.\n";
+        }
+        gameOverText.text += "Your score is " + playerScore + ". Terrible.\n";
+        gameOverText.text += "Press Space.";
         SwitchState(State.GameOver);
     }
 
