@@ -19,6 +19,10 @@ public class Connection : MonoBehaviour
     public float LazerMaksWidth;
     public float LazerMinWidth;
 
+    public LineRenderer LightningRenderer;
+    public Color MinColor;
+    public Color MaxColor;
+
     void Start ()
     {
 
@@ -35,7 +39,11 @@ public class Connection : MonoBehaviour
 
             lightning.gameObject.SetActive(true);
             lightning.transform.position = (PlayerOne.position + PlayerTwo.position) / 2.0f;
-            lightning.GetComponent<LineRenderer>().widthMultiplier = LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth);
+            LightningRenderer.widthMultiplier = LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth);
+            Color startColor = new Color((212 + (CurrentDistance / MaxDistance) * 43)/255f, (206 - (CurrentDistance / MaxDistance) * 129) / 255f, (255 - (CurrentDistance / MaxDistance) * 178) / 255f, 255f / 255f);
+            LightningRenderer.startColor = startColor;
+            LightningRenderer.endColor = startColor;
+
             //lightning.transform.localScale = new Vector3(1, LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth), CurrentDistance);
             lightning.transform.LookAt(PlayerTwo);
 
