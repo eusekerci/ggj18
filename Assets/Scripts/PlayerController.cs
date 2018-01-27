@@ -28,7 +28,10 @@ public class PlayerController : MonoBehaviour
             float x = PlayerName == 1 ? Input.GetAxis("Horizontal2") : Input.GetAxis("Horizontal");
             float y = PlayerName == 1 ? Input.GetAxis("Vertical2") : Input.GetAxis("Vertical");
 
-            rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+            if (Mathf.Abs(x) > 0.2f || Mathf.Abs(y) > 0.2f)
+                rb.velocity = new Vector3(x, y, 0).normalized * Speed;
+            else
+                rb.velocity = new Vector3(0, 0, 0).normalized;
 
             if (Connection.IsConnected)
             {

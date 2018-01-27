@@ -73,9 +73,11 @@ public class GameManager : MonoBehaviour
     {
         int playerScore = Mathf.RoundToInt(enemySpawner.totalScoreCollected * 10);
         int prevHighScore = highScore;
-        if(playerScore > highScore)
+
+        gameOverText.text = "Your score is " + playerScore + "\n";
+        if (playerScore > highScore)
         {
-            gameOverText.text = "New High Score!\n";
+            gameOverText.text += "New High Score!\n";
             gameOverText.text += "You still suck, though.\n";
             highScore = playerScore;
             PlayerPrefs.SetInt("highScore", highScore);
@@ -83,10 +85,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            gameOverText.text = "Noobs. You suck.\n";
+            gameOverText.text += "Noobs. You suck.\n";
         }
-        gameOverText.text += "Your score is " + playerScore + ". Terrible.\n";
-        gameOverText.text += "Press Space.";
+        gameOverText.text += "Press Space to Restart";
+
         SwitchState(State.GameOver);
     }
 
