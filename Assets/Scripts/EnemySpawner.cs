@@ -137,6 +137,25 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
+    IEnumerator MedicKillCoroutine(Enemy enemy)
+    {
+        GameObject.Destroy(enemy.GetComponent<Collider>());
+
+        ParticleSystem ps = enemy.GetComponentInChildren<ParticleSystem>();
+
+        float currentTime = 0.0f;
+        float totalTime = 1.0f;
+        while (currentTime < totalTime)
+        {
+            ps.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, currentTime / totalTime);
+
+            yield return new WaitForEndOfFrame();
+            currentTime = currentTime + Time.deltaTime;
+        }
+
+        GameObject.Destroy(enemy.gameObject);
+    }
+
     public void OnEnemyEnraged(Enemy enemy)
     {
         //         Vector2 randomVector = Random.insideUnitCircle.normalized;
@@ -161,6 +180,10 @@ public class EnemySpawner : MonoBehaviour
         if(enemy.lightningBolt != null)
         {
             StartCoroutine(KillByLaserCoroutine(enemy));
+        }
+        else if(enemy.GetEnemyType() == EnemyType.Medic)
+        {
+            StartCoroutine(MedicKillCoroutine(enemy));
         }
         else
         {
