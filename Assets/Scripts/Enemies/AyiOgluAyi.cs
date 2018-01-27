@@ -12,6 +12,7 @@ public class AyiOgluAyi : Enemy
     public override void Update()
     {
         base.Update();
+        transform.up = moveDirection;
     }
 
     public override void OnHitConnection()
