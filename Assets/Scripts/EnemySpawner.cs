@@ -109,13 +109,32 @@ public class EnemySpawner : MonoBehaviour
         currentDifficulty = 0;
     }
 
-    IEnumerator KillByLaserCoroutine(Vector3 position)
+    IEnumerator KillByLaserCoroutine(Enemy enemy)
     {
+        GameObject.Destroy(enemy.GetComponent<Collider>());
+        enemy.lightningBolt.enabled = true;
+
+        float currentTime = 0.0f;
+        float totalTime = 1.0f;
+        while(currentTime < totalTime)
+        {
+            enemy.lightningBolt.Generations = (int)Mathf.Lerp(0, 8f, currentTime / totalTime);
+            enemy.lightningBolt.ChaosFactor = Mathf.Lerp(0, 0.3f, currentTime / totalTime);
+            yield return new WaitForEndOfFrame();
+            currentTime = currentTime + Time.deltaTime;
+        }
+        //enemy.lightningBolt.enabled = false;
+
+        iTween.ShakePosition(Camera.main.gameObject, enemy.transform.position.normalized / 2.0f, 0.5f);
+
         ParticleSystem particleSystem = GameObject.Instantiate(killByLaserParticlePrefab).GetComponent<ParticleSystem>();
-        particleSystem.transform.position = position;
+        particleSystem.transform.position = enemy.transform.position - Vector3.forward * 1;
         particleSystem.Play();
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.2f);
+        GameObject.Destroy(enemy.gameObject);
+        yield return new WaitForSeconds(1.0f);
         GameObject.Destroy(particleSystem.gameObject);
+
     }
 
     public void OnEnemyEnraged(Enemy enemy)
@@ -138,15 +157,22 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnEnemyKilled(Enemy enemy)
     {
-        StartCoroutine(KillByLaserCoroutine(enemy.transform.position));
+        enemy.isDead = true;
+        if(enemy.lightningBolt != null)
+        {
+            StartCoroutine(KillByLaserCoroutine(enemy));
+        }
+        else
+        {
+            GameObject.Destroy(enemy.gameObject);
+        }
         allEnemies.Remove(enemy);
-        iTween.ShakePosition(Camera.main.gameObject, enemy.transform.position.normalized /2.0f, 0.5f);
+
         if (enemy.isEnraged == false)
         {
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
         totalScoreCollected = totalScoreCollected + enemy.GetDifficulty();
-        GameObject.Destroy(enemy.gameObject);
     }
 
     Enemy GetNextEnemy()

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using DigitalRuby.LightningBolt;
+
 
 
 public enum EnemyType
@@ -18,20 +20,31 @@ public enum EnemyType
 public abstract class Enemy : MonoBehaviour
 {
     public Vector3 moveDirection;
-    public float speed = 1.7f;
+    public float speed = 100f;
     public bool isEnraged = false;
     public EnemySpawner spawner;
     public SpriteRenderer renderer;
+    public LightningBoltScript lightningBolt;
+    public bool isDead = false;
 
 	public virtual void Start ()
     {
-
+        isDead = false;
+        speed = 1;
+        lightningBolt = GetComponentInChildren<LightningBoltScript>();
+        if(lightningBolt != null)
+        {
+            lightningBolt.enabled = false;
+        }
     }
 
     public virtual void Update ()
     {
-        HandleMovement();
-        CheckBounds();
+        if (isDead == false)
+        {
+            HandleMovement();
+            CheckBounds();
+        }
     }
 
     public abstract float GetDifficulty();

@@ -4277,6 +4277,48 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &1026086836
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.1105614
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -3.9917378
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 2.9964712
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515448043423152, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1153002913
 Prefab:
   m_ObjectHideFlags: 0
