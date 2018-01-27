@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4010298053647764}
+  - component: {fileID: 114511799908840444}
   m_Layer: 0
   m_Name: ManaUI
   m_TagString: Untagged
@@ -615,3 +616,24 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1681134388390258}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114511799908840444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048101137622406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fac30476ed709469b65d3cabea3fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Connection: {fileID: 0}
+  GameManager: {fileID: 0}
+  MaksMana: 100
+  CurrentMana: 100
+  ManaSpendPerSec: 5
+  ManaGainPerSec: 7.5
+  DikeyOne: {fileID: 4622263148400826}
+  DikeyTwo: {fileID: 4830403353449420}
+  YatayOne: {fileID: 4181577707857238}
+  YatayTwo: {fileID: 4341489135441560}

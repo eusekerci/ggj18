@@ -140,7 +140,8 @@ public class EnemySpawner : MonoBehaviour
     {
         StartCoroutine(KillByLaserCoroutine(enemy.transform.position));
         allEnemies.Remove(enemy);
-        if(enemy.isEnraged == false)
+        iTween.ShakePosition(Camera.main.gameObject, enemy.transform.position.normalized /2.0f, 0.5f);
+        if (enemy.isEnraged == false)
         {
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
@@ -152,16 +153,19 @@ public class EnemySpawner : MonoBehaviour
     {
         Enemy nextEnemy = null;
         float remainingDifficultyCap = targetDifficulty - currentDifficulty;
-        if(enemyTypeToDifficultyMap[nextEnemyType] < remainingDifficultyCap)
+        float randScale = Random.Range(0.7f, 1.5f);
+        if (enemyTypeToDifficultyMap[nextEnemyType] < remainingDifficultyCap)
         {
             nextEnemy = GameObject.Instantiate(enemyPrefabs[(int)nextEnemyType]).GetComponent<Enemy>();
             nextEnemyType = (EnemyType)Random.Range(0, (int)EnemyType.Count);
+            nextEnemy.gameObject.transform.localScale = new Vector3(randScale, randScale, randScale);
         }
         else if (allEnemies.Count == 0)
         {
             nextEnemyType = EnemyType.Ayi;
             nextEnemy = GameObject.Instantiate(enemyPrefabs[(int)nextEnemyType]).GetComponent<Enemy>();
             nextEnemyType = (EnemyType)Random.Range(0, (int)EnemyType.Count);
+            nextEnemy.gameObject.transform.localScale = new Vector3(randScale, randScale, randScale);
         }
         return nextEnemy;
     }

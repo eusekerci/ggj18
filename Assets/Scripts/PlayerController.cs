@@ -12,8 +12,11 @@ public class PlayerController : MonoBehaviour
     public PlayerController otherController;
 
     public GameManager gameManager;
+    public GameObject PlayerDeathParticlePrefab;
+    public SpriteRenderer Renderer;
 
-	void Start ()
+
+    void Start ()
     {
         rb = GetComponent<Rigidbody>();
 	}
@@ -56,7 +59,21 @@ public class PlayerController : MonoBehaviour
             if (collidedEnemy != null)
             {
                 collidedEnemy.OnHitPlayer();
+                if (collidedEnemy.GetEnemyType() != EnemyType.Medic)
+                {
+                    StartCoroutine(PlayerDeathLaserCoroutine(transform.position));
+                    Renderer.enabled = false;
+                }
             }
         }
+    }
+
+    IEnumerator PlayerDeathLaserCoroutine(Vector3 position)
+    {
+        ParticleSystem particleSystem = GameObject.Instantiate(PlayerDeathParticlePrefab).GetComponent<ParticleSystem>();
+        particleSystem.transform.position = position;
+        particleSystem.Play();
+        yield return new WaitForSeconds(1.3f);
+        GameObject.Destroy(particleSystem.gameObject);
     }
 }
