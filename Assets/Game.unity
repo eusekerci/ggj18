@@ -310,7 +310,7 @@ MonoBehaviour:
   PlayerOne: {fileID: 1729506933}
   PlayerTwo: {fileID: 1458840206}
   MinRangeToReconnect: 2
-  MaxDistance: 30
+  MaxDistance: 10
   IsConnected: 0
   CurrentDistance: 0
   OneToTwoDirection: {x: 0, y: 0, z: 0}
@@ -318,8 +318,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   Lazer: {fileID: 486437528}
-  LazerMaksWidth: 0
-  LazerMinWidth: 0
+  LazerMaksWidth: 0.05
+  LazerMinWidth: 0.4
 --- !u!1001 &486437527
 Prefab:
   m_ObjectHideFlags: 0
@@ -694,9 +694,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1458840206}
-  - component: {fileID: 1458840204}
   - component: {fileID: 1458840202}
   - component: {fileID: 1458840201}
+  - component: {fileID: 1458840203}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -716,7 +716,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 2
-  Speed: 20
+  Speed: 5
+  Connection: {fileID: 392333708}
   otherController: {fileID: 1729506930}
   gameManager: {fileID: 17731483}
 --- !u!54 &1458840202
@@ -734,8 +735,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1458840204
-BoxCollider:
+--- !u!135 &1458840203
+SphereCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -744,7 +745,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1458840206
 Transform:
@@ -897,9 +898,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1729506933}
-  - component: {fileID: 1729506932}
   - component: {fileID: 1729506931}
   - component: {fileID: 1729506930}
+  - component: {fileID: 1729506932}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -919,7 +920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 1
-  Speed: 20
+  Speed: 5
+  Connection: {fileID: 392333708}
   otherController: {fileID: 1458840201}
   gameManager: {fileID: 17731483}
 --- !u!54 &1729506931
@@ -937,8 +939,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1729506932
-BoxCollider:
+--- !u!135 &1729506932
+SphereCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -947,7 +949,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1729506933
 Transform:

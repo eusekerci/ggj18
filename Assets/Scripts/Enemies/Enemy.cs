@@ -21,6 +21,7 @@ public abstract class Enemy : MonoBehaviour
     public float speed = 1.0f;
     public bool isEnraged = false;
     public EnemySpawner spawner;
+    public SpriteRenderer renderer;
 
 	public virtual void Start ()
     {
@@ -51,8 +52,7 @@ public abstract class Enemy : MonoBehaviour
     
     public void CheckBounds()
     {
-        float cameraSize = Camera.main.orthographicSize;
-        if(transform.position.x > cameraSize || transform.position.x < -cameraSize || transform.position.y > cameraSize || transform.position.y < -cameraSize)
+        if(transform.position.x > Utils.xMax || transform.position.x < Utils.xMin || transform.position.y > Utils.yMax || transform.position.y < Utils.yMin)
         {
             Enrage();
         }

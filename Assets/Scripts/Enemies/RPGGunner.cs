@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class RPGGunner : Enemy
 {
+    public Transform Player;
+
     public override void Start()
     {
         base.Start();
+        int x = Random.Range(1, 3);
+        string a = x.ToString();
+        Player = GameObject.Find("Player" + a).transform;
     }
 
     public override void Update()
@@ -31,7 +36,7 @@ public class RPGGunner : Enemy
 
     public override void HandleMovement()
     {
-
+        moveDirection = (Player.transform.position - transform.position).normalized;
         base.HandleMovement();
     }
 

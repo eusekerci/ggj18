@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class Utils
+{
+    public static float xMin = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
+    public static float xMax = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, 0)).x;
+    public static float yMin = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y;
+    public static float yMax = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, 0)).y;
+}
+
 public class EnemySpawner : MonoBehaviour
 {
     float targetDifficulty;
@@ -15,49 +23,50 @@ public class EnemySpawner : MonoBehaviour
     public GameManager gameManager;
     public GameObject[] enemyPrefabs;
 
-	void Start ()
+    void Start ()
     {
+        currentDifficulty = 0;
         enemyTypeToDifficultyMap.Add(EnemyType.Ayi, 1.0f);
         enemyTypeToDifficultyMap.Add(EnemyType.Ayiogluayi, 2.0f);
         enemyTypeToDifficultyMap.Add(EnemyType.Medic, 1.5f);
         enemyTypeToDifficultyMap.Add(EnemyType.Gunner, 2.5f);
         enemyTypeToDifficultyMap.Add(EnemyType.RPGGunner, 3.0f);
-	}
+    }
 	
 	void Update ()
     {
         if(gameManager.state == GameManager.State.Game)
         {
             accumulatedTime = accumulatedTime + Time.deltaTime;
-            targetDifficulty = Mathf.Max(Mathf.Sqrt(accumulatedTime), 2);
+            targetDifficulty = Mathf.Max((Mathf.Pow(accumulatedTime, 0.7f)), 2);
             if (currentDifficulty < targetDifficulty - 1)
             {
                 Enemy newEnemy = GetRandomEnemy();
                 newEnemy.spawner = this;
 
                 float randomValue = Random.Range(0.0f, 1.0f);
-                float cameraSize = Camera.main.orthographicSize;
+                
                 Vector2 entryPoint;
                 Vector2 exitPoint;
                 if(randomValue < 0.25f)
                 {
-                    entryPoint = new Vector2(-cameraSize, Random.Range(-cameraSize, cameraSize));
-                    exitPoint = new Vector2(cameraSize, Random.Range(-cameraSize, cameraSize));
+                    entryPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
+                    exitPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
                 }
                 else if (randomValue < 0.5f)
                 {
-                    entryPoint = new Vector2(cameraSize, Random.Range(-cameraSize, cameraSize));
-                    exitPoint = new Vector2(-cameraSize, Random.Range(-cameraSize, cameraSize));
+                    entryPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
+                    exitPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
                 }
-                else if (randomValue < 0.5f)
+                else if (randomValue < 0.75f)
                 {
-                    entryPoint = new Vector2(Random.Range(-cameraSize, cameraSize), cameraSize);
-                    exitPoint = new Vector2(Random.Range(-cameraSize, cameraSize), -cameraSize);
+                    entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
+                    exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
                 }
                 else
                 {
-                    entryPoint = new Vector2(Random.Range(-cameraSize, cameraSize), cameraSize);
-                    exitPoint = new Vector2(Random.Range(-cameraSize, cameraSize), -cameraSize);
+                    entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
+                    exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
                 }
 
                 newEnemy.transform.position = entryPoint;
@@ -98,7 +107,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         enemy.moveDirection = -enemy.moveDirection;
-        enemy.GetComponent<Renderer>().material.color = Color.red;
+        enemy.renderer.color = Color.red;
         enemy.isEnraged = true;
 
     }
