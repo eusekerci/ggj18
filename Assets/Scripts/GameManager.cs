@@ -18,9 +18,37 @@ public class GameManager : MonoBehaviour
 
     public EnemySpawner enemySpawner;
 
+    public GameObject borderPrefab;
+
     public void Start()
     {
         state = State.Game;
+
+        float xMid = (Utils.xMin + Utils.xMax) * 0.5f;
+        float xScale = Utils.xMax - Utils.xMin;
+
+        float yMid = (Utils.yMin + Utils.yMax) * 0.5f;
+        float yScale = Utils.yMax - Utils.yMin;
+
+        GameObject border_0 = GameObject.Instantiate(borderPrefab);
+        border_0.name = "Border_0";
+        border_0.transform.position = new Vector3(xMid, Utils.yMin);
+        border_0.transform.localScale = new Vector3(xScale, 1, 1);
+
+        GameObject border_1 = GameObject.Instantiate(borderPrefab);
+        border_1.name = "Border_1";
+        border_1.transform.position = new Vector3(xMid, Utils.yMax);
+        border_1.transform.localScale = new Vector3(xScale, 1, 1);
+
+        GameObject border_2 = GameObject.Instantiate(borderPrefab);
+        border_2.name = "Border_2";
+        border_2.transform.position = new Vector3(Utils.xMin, yMid);
+        border_2.transform.localScale = new Vector3(1, yScale, 1);
+
+        GameObject border_3 = GameObject.Instantiate(borderPrefab);
+        border_3.name = "Border_3";
+        border_3.transform.position = new Vector3(Utils.xMax, yMid);
+        border_3.transform.localScale = new Vector3(1, yScale, 1);
     }
 
     public void Update()

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Ayi : Enemy
 {
+    float rotationSpeed;
     public override void Start()
     {
         base.Start();
+        rotationSpeed = Random.Range(0.3f, 2.0f);
     }
 
     public override void Update()
     {
+        transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime * 100);
         base.Update();
     }
 

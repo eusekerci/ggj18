@@ -25,6 +25,8 @@ public class EnemySpawner : MonoBehaviour
     public GameManager gameManager;
     public GameObject[] enemyPrefabs;
 
+    public GameObject killByLaserParticlePrefab;
+
     void Start ()
     {
         currentDifficulty = 0;
@@ -54,25 +56,27 @@ public class EnemySpawner : MonoBehaviour
 
                     Vector2 entryPoint;
                     Vector2 exitPoint;
+                    float minMult = 0.8f;
+                    float maxMult = 0.8f;
                     if (randomValue < 0.25f)
                     {
-                        entryPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
-                        exitPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
+                        entryPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin * minMult, Utils.yMax * maxMult));
+                        exitPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin * minMult, Utils.yMax * maxMult));
                     }
                     else if (randomValue < 0.5f)
                     {
-                        entryPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
-                        exitPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
+                        entryPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin * minMult, Utils.yMax * maxMult));
+                        exitPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin* minMult, Utils.yMax * maxMult));
                     }
                     else if (randomValue < 0.75f)
                     {
-                        entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
-                        exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
+                        entryPoint = new Vector2(Random.Range(Utils.xMin * minMult, Utils.xMax * maxMult), Utils.yMax);
+                        exitPoint = new Vector2(Random.Range(Utils.xMin * minMult, Utils.xMax * maxMult), Utils.yMin);
                     }
                     else
                     {
-                        entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
-                        exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
+                        entryPoint = new Vector2(Random.Range(Utils.xMin * minMult, Utils.xMax * maxMult), Utils.yMin);
+                        exitPoint = new Vector2(Random.Range(Utils.xMin * minMult, Utils.xMax * maxMult), Utils.yMax);
                     }
 
                     newEnemy.transform.position = entryPoint;
@@ -101,6 +105,15 @@ public class EnemySpawner : MonoBehaviour
         accumulatedTime = 0;
     }
 
+    IEnumerator KillByLaserCoroutine(Vector3 position)
+    {
+        ParticleSystem particleSystem = GameObject.Instantiate(killByLaserParticlePrefab).GetComponent<ParticleSystem>();
+        particleSystem.transform.position = position;
+        particleSystem.Play();
+        yield return new WaitForSeconds(1.3f);
+        GameObject.Destroy(particleSystem.gameObject);
+    }
+
     public void OnEnemyEnraged(Enemy enemy)
     {
         //         Vector2 randomVector = Random.insideUnitCircle.normalized;
@@ -121,13 +134,13 @@ public class EnemySpawner : MonoBehaviour
 
     public void OnEnemyKilled(Enemy enemy)
     {
+        StartCoroutine(KillByLaserCoroutine(enemy.transform.position));
         allEnemies.Remove(enemy);
         if(enemy.isEnraged == false)
         {
             currentDifficulty = currentDifficulty - enemy.GetDifficulty();
         }
         GameObject.Destroy(enemy.gameObject);
-        
     }
 
     Enemy GetNextEnemy()

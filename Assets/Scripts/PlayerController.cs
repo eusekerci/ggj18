@@ -36,11 +36,12 @@ public class PlayerController : MonoBehaviour
         }
 	}
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
+        GameObject collidedObject = collision.transform.gameObject;
         if (gameManager.state == GameManager.State.Game)
         {
-            Enemy collidedEnemy = other.gameObject.GetComponent<Enemy>();
+            Enemy collidedEnemy = collidedObject.GetComponent<Enemy>();
             if (collidedEnemy != null)
             {
                 collidedEnemy.OnHitPlayer();

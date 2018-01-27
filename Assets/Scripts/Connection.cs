@@ -30,6 +30,9 @@ public class Connection : MonoBehaviour
         CurrentDistance = (PlayerOne.position - PlayerTwo.position).magnitude;
         if(IsConnected)
         {
+            //lightning.GetComponent<LineRenderer>().enabled = true;
+            lightning.Trigger();
+
             lightning.gameObject.SetActive(true);
             lightning.transform.position = (PlayerOne.position + PlayerTwo.position) / 2.0f;
             lightning.GetComponent<LineRenderer>().widthMultiplier = LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth);
@@ -52,6 +55,7 @@ public class Connection : MonoBehaviour
         }
         else
         {
+            //lightning.GetComponent<LineRenderer>().enabled = false;
             lightning.gameObject.SetActive(false);
             if (CurrentDistance < MinRangeToReconnect)
             {
