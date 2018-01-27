@@ -16,6 +16,8 @@ public class EnemySpawner : MonoBehaviour
     float accumulatedTime;
     float currentDifficulty;
 
+    EnemyType nextEnemyType;
+
     Dictionary<EnemyType, float> enemyTypeToDifficultyMap = new Dictionary<EnemyType, float>();
 
     List<Enemy> allEnemies = new List<Enemy>();
@@ -31,6 +33,8 @@ public class EnemySpawner : MonoBehaviour
         enemyTypeToDifficultyMap.Add(EnemyType.Medic, 1.5f);
         enemyTypeToDifficultyMap.Add(EnemyType.Gunner, 2.5f);
         enemyTypeToDifficultyMap.Add(EnemyType.RPGGunner, 3.0f);
+
+        nextEnemyType = (EnemyType)Random.Range(0, (int)EnemyType.Count);
     }
 	
 	void Update ()
@@ -38,43 +42,46 @@ public class EnemySpawner : MonoBehaviour
         if(gameManager.state == GameManager.State.Game)
         {
             accumulatedTime = accumulatedTime + Time.deltaTime;
-            targetDifficulty = Mathf.Max((Mathf.Pow(accumulatedTime, 0.7f)), 2);
+            targetDifficulty = Mathf.Max((Mathf.Pow(accumulatedTime, 0.6f)), 2);
             if (currentDifficulty < targetDifficulty - 1)
             {
-                Enemy newEnemy = GetRandomEnemy();
-                newEnemy.spawner = this;
-
-                float randomValue = Random.Range(0.0f, 1.0f);
-                
-                Vector2 entryPoint;
-                Vector2 exitPoint;
-                if(randomValue < 0.25f)
+                Enemy newEnemy = GetNextEnemy();
+                if (newEnemy != null)
                 {
-                    entryPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
-                    exitPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
-                }
-                else if (randomValue < 0.5f)
-                {
-                    entryPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
-                    exitPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
-                }
-                else if (randomValue < 0.75f)
-                {
-                    entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
-                    exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
-                }
-                else
-                {
-                    entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
-                    exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
-                }
+                    newEnemy.spawner = this;
 
-                newEnemy.transform.position = entryPoint;
-                newEnemy.moveDirection = (exitPoint - entryPoint).normalized;
+                    float randomValue = Random.Range(0.0f, 1.0f);
 
-                currentDifficulty = currentDifficulty + newEnemy.GetDifficulty();
+                    Vector2 entryPoint;
+                    Vector2 exitPoint;
+                    if (randomValue < 0.25f)
+                    {
+                        entryPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
+                        exitPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
+                    }
+                    else if (randomValue < 0.5f)
+                    {
+                        entryPoint = new Vector2(Utils.xMax, Random.Range(Utils.yMin, Utils.yMax));
+                        exitPoint = new Vector2(Utils.xMin, Random.Range(Utils.yMin, Utils.yMax));
+                    }
+                    else if (randomValue < 0.75f)
+                    {
+                        entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
+                        exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
+                    }
+                    else
+                    {
+                        entryPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMin);
+                        exitPoint = new Vector2(Random.Range(Utils.xMin, Utils.xMax), Utils.yMax);
+                    }
 
-                allEnemies.Add(newEnemy);
+                    newEnemy.transform.position = entryPoint;
+                    newEnemy.moveDirection = (exitPoint - entryPoint).normalized;
+
+                    currentDifficulty = currentDifficulty + newEnemy.GetDifficulty();
+
+                    allEnemies.Add(newEnemy);
+                }
             }
         }
 	}
@@ -123,24 +130,22 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    Enemy GetRandomEnemy()
+    Enemy GetNextEnemy()
     {
-        List<EnemyType> possibleEnemyTypes = new List<EnemyType>();
+        Enemy nextEnemy = null;
         float remainingDifficultyCap = targetDifficulty - currentDifficulty;
-        for(int i = 0; i < (int)EnemyType.Count; i++)
+        if(enemyTypeToDifficultyMap[nextEnemyType] < remainingDifficultyCap)
         {
-            float currentEnemyDif = enemyTypeToDifficultyMap[(EnemyType)i];
-            if(currentEnemyDif < remainingDifficultyCap)
-            {
-                possibleEnemyTypes.Add((EnemyType)i);
-            }
+            nextEnemy = GameObject.Instantiate(enemyPrefabs[(int)nextEnemyType]).GetComponent<Enemy>();
+            nextEnemyType = (EnemyType)Random.Range(0, (int)EnemyType.Count);
         }
-
-        Debug.Assert(possibleEnemyTypes.Count > 0);
-
-        int enemyTypeIndex = (int)possibleEnemyTypes[Random.Range(0, possibleEnemyTypes.Count)];
-        Enemy newEnemy = GameObject.Instantiate(enemyPrefabs[enemyTypeIndex]).GetComponent<Enemy>();
-        return newEnemy;
+        else if (allEnemies.Count == 0)
+        {
+            nextEnemyType = EnemyType.Ayi;
+            nextEnemy = GameObject.Instantiate(enemyPrefabs[(int)nextEnemyType]).GetComponent<Enemy>();
+            nextEnemyType = (EnemyType)Random.Range(0, (int)EnemyType.Count);
+        }
+        return nextEnemy;
     }
 
     

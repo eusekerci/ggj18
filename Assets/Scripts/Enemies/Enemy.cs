@@ -18,7 +18,7 @@ public enum EnemyType
 public abstract class Enemy : MonoBehaviour
 {
     public Vector3 moveDirection;
-    public float speed = 1.0f;
+    public float speed = 1.7f;
     public bool isEnraged = false;
     public EnemySpawner spawner;
     public SpriteRenderer renderer;

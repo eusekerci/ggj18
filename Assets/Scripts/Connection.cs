@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DigitalRuby.LightningBolt;
 
 public class Connection : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Connection : MonoBehaviour
     public Vector3 OneToTwoDirection;
     public LayerMask EnemyLayer;
 
-    public GameObject Lazer;
+    public LightningBoltScript lightning;
     public float LazerMaksWidth;
     public float LazerMinWidth;
 
@@ -29,10 +30,11 @@ public class Connection : MonoBehaviour
         CurrentDistance = (PlayerOne.position - PlayerTwo.position).magnitude;
         if(IsConnected)
         {
-            Lazer.SetActive(true);
-            Lazer.transform.position = (PlayerOne.position + PlayerTwo.position) / 2.0f;
-            Lazer.transform.localScale = new Vector3(1, LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth), CurrentDistance);
-            Lazer.transform.LookAt(PlayerTwo);
+            lightning.gameObject.SetActive(true);
+            lightning.transform.position = (PlayerOne.position + PlayerTwo.position) / 2.0f;
+            lightning.GetComponent<LineRenderer>().widthMultiplier = LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth);
+            //lightning.transform.localScale = new Vector3(1, LazerMinWidth + (CurrentDistance / MaxDistance) * (LazerMaksWidth - LazerMinWidth), CurrentDistance);
+            lightning.transform.LookAt(PlayerTwo);
 
 
             if(CurrentDistance > MaxDistance)
@@ -50,7 +52,7 @@ public class Connection : MonoBehaviour
         }
         else
         {
-            Lazer.SetActive(false);
+            lightning.gameObject.SetActive(false);
             if (CurrentDistance < MinRangeToReconnect)
             {
                 IsConnected = true;
