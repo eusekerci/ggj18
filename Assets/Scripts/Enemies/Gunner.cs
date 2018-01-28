@@ -57,6 +57,9 @@ public class Gunner : Enemy
                 State = GunnerState.Run;
             }
         }
+        Vector3 playerToEnemy = Player.transform.position - transform.position;
+
+        transform.up = -playerToEnemy.normalized;
     }
 
     public override float GetDifficulty()
