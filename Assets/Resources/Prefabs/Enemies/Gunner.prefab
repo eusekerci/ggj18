@@ -201,7 +201,7 @@ MonoBehaviour:
   lightningBolt: {fileID: 0}
   isDead: 0
   State: 0
-  GunPrefab: {fileID: 1445571882358508, guid: e6aacecfb525f4f489249abd144169ae, type: 2}
+  GunPrefab: {fileID: 1665695348168220, guid: 81ae146c479af864db075fd3c6a62d1c, type: 2}
   Player: {fileID: 0}
   FirePerSec: 3
   StateChangePerSec: 3

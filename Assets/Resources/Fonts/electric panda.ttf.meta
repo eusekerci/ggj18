@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: aa1b539662e70fa42a798be7363c086f
+timeCreated: 1517127081
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Electric Panda
+  fontNames:
+  - Electric Panda
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 33b4009a6e2dcf946b5f2d3682ee0aca, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

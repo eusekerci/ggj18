@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Ayi : Enemy
 {
+    public Sprite kaya1;
+    public Sprite kaya2;
+
     float rotationSpeed;
     public override void Start()
     {
         base.Start();
         rotationSpeed = Random.Range(0.3f, 2.0f);
+        float x = Random.Range(0.0f, 1.0f);
+        if(x > 0.5f)
+        {
+            renderer.sprite = kaya1;
+        }
+        else
+        {
+            renderer.sprite = kaya2;
+        }
     }
 
     public override void Update()

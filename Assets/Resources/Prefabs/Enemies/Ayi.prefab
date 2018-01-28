@@ -178,6 +178,8 @@ MonoBehaviour:
   renderer: {fileID: 212525807633024930}
   lightningBolt: {fileID: 0}
   isDead: 0
+  kaya1: {fileID: 21300000, guid: f88e08861ac44514a9fe9e9b5d0a02f6, type: 3}
+  kaya2: {fileID: 21300000, guid: d80144f3f6547bf4299f834b62868414, type: 3}
 --- !u!114 &114305202723602320
 MonoBehaviour:
   m_ObjectHideFlags: 1

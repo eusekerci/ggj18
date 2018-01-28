@@ -66,6 +66,12 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Game");
             SwitchState(State.Game);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         scoreText.text = "" + Mathf.RoundToInt(enemySpawner.totalScoreCollected * 10);
     }
 
